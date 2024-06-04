@@ -38,7 +38,8 @@ class PrettyJSONResponse(Response):
 <script src="https://unpkg.com/@alenaksu/json-viewer@2.0.1/dist/json-viewer.bundle.js"></script>
 <json-viewer id="json"></json-viewer>
 <script>
-    document.querySelector('#json').data = {
+    document.querySelector('#json').data =
+{
     json.dumps(
         content,
         ensure_ascii=False,
@@ -46,7 +47,8 @@ class PrettyJSONResponse(Response):
         indent=2,
         separators=(", ", ": "),
     )
-};
+}
+;
 </script>
 """.encode()
 
@@ -147,8 +149,8 @@ def stats(query: bool = True):
 
 
 @app.get("/dummy/recent", status_code=200, response_class=PrettyJSONResponse)
-def recent():
-    return recent_requests[::-1]
+def recent(count: int = 100):
+    return recent_requests[: -(count + 1) : -1]
 
 
 @app.get("/dummy/flush", status_code=200)
