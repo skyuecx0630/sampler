@@ -82,6 +82,7 @@ def add_to_history(parsed_request, response=None):
     if response:
         parsed_request["response"] = {
             "status_code": response.status_code,
+            "response_time": f"{response._elapsed.microseconds // 1000}ms",
             "headers": dict(response.headers),
             "body": response.content.decode(),
         }
