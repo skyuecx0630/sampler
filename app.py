@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 import json
 import typing
@@ -26,7 +27,7 @@ ignore_health_check = int(ENV_IGNORE_HEALTH_CHECK)
 ENV_UPSTREAM_ENDPOINT = os.environ.get("UPSTREAM_ENDPOINT", None)
 upstream_endpoint = ENV_UPSTREAM_ENDPOINT
 
-http_client = httpx.AsyncClient()
+http_client = httpx.AsyncClient(timeout=60)
 
 
 class PrettyJSONResponse(Response):
@@ -88,7 +89,7 @@ def add_to_history(parsed_request, response=None):
         }
     else:
         parsed_request["response"] = "NO UPSTREAM"
-
+        parsed_request["response_at"] = str(datetime.now())
     recent_requests.append(parsed_request)
 
 
